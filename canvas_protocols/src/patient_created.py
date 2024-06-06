@@ -12,7 +12,7 @@ from canvas_workflow_kit.constants import (
 
 class MyNotificationProtocol(ClinicalQualityMeasure):
     class Meta:
-        version="v1.0.2"
+        version="v1.0.3"
         title='Tellescope Patient Create Webhook'
         description='Creates an Enduser in Tellescope when a Patient is created in Canvas'
         compute_on_change_types = [CHANGE_TYPE.PATIENT]
@@ -28,7 +28,7 @@ class MyNotificationProtocol(ClinicalQualityMeasure):
                 (self.settings['ts-endpoint'] if 'ts-endpoint' in self.settings else 'https://api.tellescope.com') + '/v1/enduser', 
                 {
                     "source": "Canvas",
-                    "externalId": self.patient.patient['id'],
+                    "externalId": self.patient.patient['key'],
                     "fname": self.patient.first_name,
                     "lname": self.patient.last_name,
                     "dateOfBirth": mm + "-" + dd + '-' + yyyy,
