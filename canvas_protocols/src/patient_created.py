@@ -12,7 +12,7 @@ from canvas_workflow_kit.constants import (
 
 class MyNotificationProtocol(ClinicalQualityMeasure):
     class Meta:
-        version="v1.0.1"
+        version="v1.0.2"
         title='Tellescope Patient Create Webhook'
         description='Creates an Enduser in Tellescope when a Patient is created in Canvas'
         compute_on_change_types = [CHANGE_TYPE.PATIENT]
@@ -22,7 +22,7 @@ class MyNotificationProtocol(ClinicalQualityMeasure):
         result = ProtocolResult()
         result.status = STATUS_NOT_APPLICABLE
 
-        if (result):
+        if (self.field_changes.get('created')):
             [yyyy, mm, dd] = self.patient.date_of_birth.split('-')
             response = send_notification( # a post request
                 (self.settings['ts-endpoint'] if 'ts-endpoint' in self.settings else 'https://api.tellescope.com') + '/v1/enduser', 
